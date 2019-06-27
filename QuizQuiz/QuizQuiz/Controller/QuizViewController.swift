@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class QuizViewController: UIViewController {
     
@@ -18,6 +19,15 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var buttonC: UIButton!
     @IBOutlet weak var buttonD: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    
+    
+    var quizApi = QuizApi()
+    var currentQuiz : Int = 0
+    var quizes = [Quiz]() {
+        didSet {
+            updateView()
+        }
+    }
     
 
     @IBAction func onButtonA(_ sender: UIButton) {
@@ -36,10 +46,41 @@ class QuizViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        fetchDataByApi()
+        
     }
     
-    
+}
 
+
+extension QuizViewController {
+    
+    func updateView() {
+        
+    }
+}
+
+extension QuizViewController {
+    @objc func fetchDataByApi() {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        quizApi.delegate = self
+        quizApi.fetchQuizes()
+    }
+}
+
+
+extension QuizViewController : QuizDelegate {
+    func didFinishUpdatingQuizes(quizes: [Quiz]) {
+        
+        MBProgressHUD.hide(for: self.view, animated: true)
+        self.quizes = quizes
+        currentQuiz = currentQuiz + 1
+    }
+    
+    func didFailWithError(error: Error) {
+        
+        MBProgressHUD.hide(for: self.view, animated: true)
+
+    }
+    
 }

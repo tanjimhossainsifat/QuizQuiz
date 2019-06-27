@@ -108,7 +108,7 @@ class QuizApi {
                 throw QuizError.castFail
             }
             
-            guard let quizDictionaries = responseDictionary["results"] as? [[String : Any?]] else {
+            guard let quizDictionaries = responseDictionary["data"] as? [[String : Any?]] else {
                 print("QuizError: Quiz dictionary not found.")
                 throw QuizError.unknown
             }
