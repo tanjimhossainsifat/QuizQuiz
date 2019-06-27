@@ -59,7 +59,7 @@ extension QuizViewController {
     
     func updateView() {
         
-        if currentQuiz <= quizes.count {
+        if currentQuiz < quizes.count {
             self.nextButton.isHidden = false
             let quiz = quizes[currentQuiz]
             
@@ -70,21 +70,32 @@ extension QuizViewController {
             }
             
             if let choiceA = quiz.choiceA {
-                self.buttonA.titleLabel?.text = choiceA
+                
+                self.buttonA.setTitle(choiceA, for: UIControl.State.normal)
+                self.buttonA.setTitle(choiceA, for: UIControl.State.highlighted)
             }
             
             if let choiceB = quiz.choiceB {
-                self.buttonB.titleLabel?.text = choiceB
+                self.buttonB.setTitle(choiceB, for: UIControl.State.normal)
+                self.buttonB.setTitle(choiceB, for: UIControl.State.highlighted)
             }
             
             if let choiceC = quiz.choiceC {
-                self.buttonC.titleLabel?.text = choiceC
+                
+                self.buttonC.setTitle(choiceC, for: UIControl.State.normal)
+                self.buttonC.setTitle(choiceC, for: UIControl.State.highlighted)
             }
             
             if let choiceD = quiz.choiceD {
-                self.buttonD.titleLabel?.text = choiceD
+                self.buttonD.setTitle(choiceD, for: UIControl.State.normal)
+                self.buttonD.setTitle(choiceD, for: UIControl.State.highlighted)
             }
             
+            self.imageView.isHidden = true
+            if let imageUrl = quiz.thumbnailUrl {
+                self.imageView.isHidden = false
+                self.imageView.setImageWith(imageUrl, placeholderImage: #imageLiteral(resourceName: "NoPreview"))
+            }
             
         } else {
             self.nextButton.isHidden = true

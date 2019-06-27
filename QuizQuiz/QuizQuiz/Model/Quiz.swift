@@ -16,13 +16,7 @@ enum QuestionType {
 class Quiz{
     var type : QuestionType?
     var title : String?
-    var thumbnail : String? {
-        didSet {
-            if let thumbnail = thumbnail {
-                thumbnailUrl = URL(string: Constant.getImageBaseUrl() + thumbnail)
-            }
-        }
-    }
+    var thumbnail : String?
     var choiceA : String?
     var choiceB : String?
     var choiceC :String?
@@ -43,13 +37,20 @@ class Quiz{
     
     init(dictionary : [String : Any?]) {
         title = dictionary["title"] as? String
-        type = dictionary["question_type"] as? QuestionType
         thumbnail = dictionary["thumbnail"] as? String
         choiceA = dictionary["choice_a"] as? String
         choiceB = dictionary["choice_b"] as? String
         choiceC = dictionary["choice_c"] as? String
         choiceD = dictionary["choice_d"] as? String
         answer = dictionary["answer"] as? String
+        
+        if let _type = dictionary["question_type"] as? String {
+            type = _type == "Photo" ? QuestionType.Photo : QuestionType.Regular
+        }
+        
+        if let thumbnail = thumbnail {
+            thumbnailUrl = URL(string: Constant.getImageBaseUrl() + thumbnail)
+        }
     }
 
 }
