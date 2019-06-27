@@ -43,6 +43,8 @@ class QuizViewController: UIViewController {
     }
     
     @IBAction func onButtonNext(_ sender: UIButton) {
+        self.currentQuiz = currentQuiz + 1
+        updateView()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,9 +59,11 @@ extension QuizViewController {
     
     func updateView() {
         
-        if currentQuiz < quizes.count {
+        if currentQuiz <= quizes.count {
             self.nextButton.isHidden = false
             let quiz = quizes[currentQuiz]
+            
+            self.topLabel.text = "Question \(currentQuiz+1) out of \(quizes.count)"
             
             if let title = quiz.title {
                 self.titleLabel.text = "Q. \(title)"
