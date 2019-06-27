@@ -57,6 +57,35 @@ extension QuizViewController {
     
     func updateView() {
         
+        if currentQuiz < quizes.count {
+            self.nextButton.isHidden = false
+            let quiz = quizes[currentQuiz]
+            
+            if let title = quiz.title {
+                self.titleLabel.text = "Q. \(title)"
+            }
+            
+            if let choiceA = quiz.choiceA {
+                self.buttonA.titleLabel?.text = choiceA
+            }
+            
+            if let choiceB = quiz.choiceB {
+                self.buttonB.titleLabel?.text = choiceB
+            }
+            
+            if let choiceC = quiz.choiceC {
+                self.buttonC.titleLabel?.text = choiceC
+            }
+            
+            if let choiceD = quiz.choiceD {
+                self.buttonD.titleLabel?.text = choiceD
+            }
+            
+            
+        } else {
+            self.nextButton.isHidden = true
+        }
+        
     }
 }
 
@@ -74,7 +103,6 @@ extension QuizViewController : QuizDelegate {
         
         MBProgressHUD.hide(for: self.view, animated: true)
         self.quizes = quizes
-        currentQuiz = currentQuiz + 1
     }
     
     func didFailWithError(error: Error) {
